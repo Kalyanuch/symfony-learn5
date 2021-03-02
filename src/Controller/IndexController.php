@@ -1,13 +1,14 @@
 <?php
 namespace App\Controller;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
 {
-    public function home()
+    public function home(LoggerInterface $logger)
     {
         //return new Response('<h1>Hello world!!</h1>');
         $images = [
@@ -37,6 +38,8 @@ class IndexController extends AbstractController
                 'alt' => 'Intro Gallery Dining Sample Pictures'
             ],
         ];
+
+        $logger->info('Homepage loaded');
 
         return $this->render('index.html.twig', [
             'year' => random_int(0, 100),
