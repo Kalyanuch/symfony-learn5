@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Service\RandomNumberGenerator;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -8,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
 {
-    public function home(LoggerInterface $logger)
+    public function home(LoggerInterface $logger, RandomNumberGenerator $randomNumberGenerator)
     {
         //return new Response('<h1>Hello world!!</h1>');
         $images = [
@@ -42,7 +43,8 @@ class IndexController extends AbstractController
         $logger->info('Homepage loaded');
 
         return $this->render('index.html.twig', [
-            'year' => random_int(0, 100),
+            //'year' => random_int(0, 100),
+            'year' => $randomNumberGenerator->getRandomNumber(0, 100),
             'images' => $images
         ]);
     }
