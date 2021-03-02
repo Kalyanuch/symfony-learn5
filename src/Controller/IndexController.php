@@ -9,7 +9,11 @@ class IndexController extends AbstractController
 {
     public function home()
     {
-        return new Response('<h1>Hello world!!</h1>');
+        //return new Response('<h1>Hello world!!</h1>');
+
+        return $this->render('index.html.twig', [
+            'year' => random_int(0, 100)
+        ]);
     }
 
     public function testJson()
