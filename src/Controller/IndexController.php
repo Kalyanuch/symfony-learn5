@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Hotel;
+use App\Repository\HotelRepository;
 use App\Service\AgeCalculator;
 use App\Service\RandomNumberGenerator;
 use Psr\Log\LoggerInterface;
@@ -16,7 +17,8 @@ class IndexController extends AbstractController
     public function home(
         LoggerInterface $logger,
         RandomNumberGenerator $randomNumberGenerator,
-        AgeCalculator $ageCalculator
+        AgeCalculator $ageCalculator,
+        HotelRepository $hotelRepository
     ): Response
     {
         //return new Response('<h1>Hello world!!</h1>');
@@ -47,11 +49,13 @@ class IndexController extends AbstractController
                 'alt' => 'Intro Gallery Dining Sample Pictures'
             ],
         ];
-
+/*
         $hotels = $this->getDoctrine()
             ->getRepository(Hotel::class)
             ->findAll();
-
+*/
+        $hotels = $hotelRepository->findAllBelowPrice(750);
+        
         $logger->info('Homepage loaded');
 
         return $this->render('index.html.twig', [
